@@ -28,7 +28,7 @@ class Tree
     
     mid = 0 + array.length / 2
     root_node = Node.new(array[mid])
-    root_node.left = build_tree(array.first(mid))
+    root_node.left = build_tree(array.take(mid))
     root_node.right = build_tree(array.drop(mid))
 
     root_node
