@@ -2,14 +2,14 @@
 
 class Node
   include Comparable
-	attr_accessor :left, :right, :data
+  attr_accessor :left, :right, :data
 
-	def initialize(data)
-		@data = data
-		@left = nil
-		@right = nil
-	end
-  
+  def initialize(data)
+    @data = data
+    @left = nil
+    @right = nil
+  end
+
   def <=>(other_node)
     @data <=> other_node.data
   end
@@ -20,7 +20,6 @@ class Tree
 
   def initialize(array)
     safe = prep_array(array)
-    p safe
     @root = build_tree(safe)
   end
 
