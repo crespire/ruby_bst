@@ -25,7 +25,7 @@ class Tree
 
   def build_tree(array)
     return nil if array.empty?
-    return Node.new(array[0]) if array.length == 1
+    return Node.new(array.first) if array.length == 1
 
     mid = 0 + array.length / 2
     root_node = Node.new(array[mid])
@@ -33,6 +33,13 @@ class Tree
     root_node.right = build_tree(array.drop(mid))
 
     root_node
+  end
+
+  def find(value, node = @root)
+    return nil if node.value.nil?
+    return node if node.data == value
+
+    value < node.value ? find(value, node.left) : find(value, node.right)
   end
 
   private
