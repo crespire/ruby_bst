@@ -20,6 +20,7 @@ class Tree
 
   def initialize(array)
     safe = prep_array(array)
+    p safe
     @root = build_tree(safe)
   end
 
@@ -30,21 +31,27 @@ class Tree
     mid = 0 + array.length / 2
     root_node = Node.new(array[mid])
     root_node.left = build_tree(array.take(mid))
-    root_node.right = build_tree(array.drop(mid))
+    root_node.right = build_tree(array.drop(mid + 1))
 
     root_node
   end
 
+  def pretty_print(node = @root, prefix = '', is_left = true)
+    pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
+    puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
+    pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
+  end
+
   def find(value, node = @root)
-    return nil if node.value.nil?
+    return nil if node.data.nil?
     return node if node.data == value
 
-    value < node.value ? find(value, node.left) : find(value, node.right)
+    value < node.data ? find(value, node.left) : find(value, node.right)
   end
 
   private
 
   def prep_array(array)
-    array.uniq.sort    
+    array.uniq.sort
   end
 end
