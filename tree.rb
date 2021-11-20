@@ -24,8 +24,9 @@ class Tree
   end
 
   def build_tree(array)
+    return nil if array.empty?
     return Node.new(array[0]) if array.length == 1
-    
+
     mid = 0 + array.length / 2
     root_node = Node.new(array[mid])
     root_node.left = build_tree(array.take(mid))
