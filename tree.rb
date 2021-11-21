@@ -46,6 +46,15 @@ class Tree
   def delete(value, node = @root)
     # I think this one we have recursion, but we have to keep track of two nodes.
     # Remember that my Node class has the mixin Comparable, so I can probably use that here.
+
+    # 3 cases we must handle
+    # no children, just set previous node pointer to nil
+    # one child, set previous node pointer to current node child
+    # two children, find left most child
+    #  save reference to current node's right child
+    #  set left most child's parent pointer to nil
+    #  replace current node with smallest child
+    #  update new current node to point to old right child
   end
 
   def find(value, node = @root)
