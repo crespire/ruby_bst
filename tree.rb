@@ -43,6 +43,11 @@ class Tree
     node
   end
 
+  def delete(value, node = @root)
+    # I think this one we have recursion, but we have to keep track of two nodes.
+    # Remember that my Node class has the mixin Comparable, so I can probably use that here.
+  end
+
   def find(value, node = @root)
     return nil if node.nil?
     return node if node.data == value
