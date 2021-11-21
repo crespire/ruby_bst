@@ -38,7 +38,8 @@ class Tree
   def insert(value, node = @root)
     return Node.new(value) if node.nil?
 
-    value < node.data ? insert(value, node.left) : insert(value, node.right)
+    value < node.data ? node.left = insert(value, node.left) : node.right = insert(value, node.right)
+    node
   end
 
   def find(value, node = @root)
