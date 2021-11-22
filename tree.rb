@@ -63,16 +63,18 @@ class Tree
       if curr_node.left.nil?
         temp = curr_node.right
         curr_node = nil
+        @size -= 1
         return temp
       elsif curr_node.right.nil?
         temp = curr_node.left
         curr_node = nil
+        @size -= 1
         return temp
       end
 
-      temp = minValueNode(curr_node.right)
+      temp = next_min(curr_node.right)
       curr_node.data = temp.data
-      curr_node.right = delete(temp.data, curr_node.right)      
+      curr_node.right = delete(temp.data, curr_node.right)
     end
     curr_node
   end
@@ -90,9 +92,7 @@ class Tree
     pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
   end
 
-  def pp
-    pretty_print()
-  end
+  alias pp pretty_print
 
   private
 
@@ -100,11 +100,9 @@ class Tree
     array.uniq.sort
   end
 
-  def minValueNode(node)
+  def next_min(node)
     current = node
-    until current.left.nil?
-      current = current.left
-    end
+    current = current.left until current.left.nil?
     current
   end
 end
