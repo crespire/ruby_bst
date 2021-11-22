@@ -64,7 +64,7 @@ class Tree
       delete(value, next_node)
     end
 
-    if next_node.left.nil? & next_node.right.nil?
+    if next_node.left.nil? && next_node.right.nil?
       curr_node.left = nil if is_left
       curr_node.right = nil unless is_left
     elsif next_node.left.nil? || next_node.right.nil?
