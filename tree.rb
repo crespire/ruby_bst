@@ -20,6 +20,7 @@ class Tree
 
   def initialize(array)
     safe = prep_array(array)
+    @size = safe.length
     @root = build_tree(safe)
   end
 
@@ -36,16 +37,44 @@ class Tree
   end
 
   def insert(value, node = @root)
-    return @root = Node.new(value) if @root.nil?
-    return Node.new(value) if node.nil?
+    if @root.nil?
+      @size += 1
+      return @root = Node.new(value)
+    end
+
+    if node.nil?
+      @size += 1
+      return Node.new(value)
+    end
 
     value < node.data ? node.left = insert(value, node.left) : node.right = insert(value, node.right)
     node
   end
 
   def delete(value, node = @root)
+    curr_node = node
+    next_node = value < curr_node.data ? curr_node.left : curr_node.right
+    is_left = value < curr_node.data
+
+    puts "Current node: #{curr_node.data}"
+    puts "Next node: #{next_node.data}"
+    puts "Is Left? #{is_left}"
+
+    until value == next_node.data
+      delete(value, next_node)
+    end
+
+    if next_node.left.nil? & next_node.right.nil?
+      curr_node.left = nil if is_left
+      curr_node.right = nil unless is_left
+    elsif next_node.left.nil? || next_node.right.nil?
+      # next node has one child
+    end
+
+    curr_node
+      
     # I think this one we have recursion, but we have to keep track of two nodes.
-    # Remember that my Node class has the mixin Comparable, so I can probably use that here.
+    # Remember that my Node class has the mixin Comparable, so I can probably use that here, maybe?
 
     # 3 cases we must handle
     # no children, just set previous node pointer to nil
