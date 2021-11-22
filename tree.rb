@@ -52,38 +52,29 @@ class Tree
   end
 
   def delete(value, node = @root)
+    return node if node.nil?
+
     curr_node = node
-    next_node = value < curr_node.data ? curr_node.left : curr_node.right
-    is_left = value < curr_node.data
+    if value < curr_node.data
+      curr_node.left = delete(value, curr_node.left)
+    elsif value > curr_node.data
+      curr_node.right = delete(value, curr_node.right)
+    else
+      if curr_node.left.nil?
+        temp = curr_node.right
+        curr_node = nil
+        return temp
+      elsif curr_node.right.nil?
+        temp = curr_node.left
+        curr_node = nil
+        return temp
+      end
 
-    puts "Current node: #{curr_node.data}"
-    puts "Next node: #{next_node.data}"
-    puts "Is Left? #{is_left}"
-
-    until value == next_node.data
-      delete(value, next_node)
+      temp = minValueNode(curr_node.right)
+      curr_node.data = temp.data
+      curr_node.right = delete(temp.data, curr_node.right)      
     end
-
-    if next_node.left.nil? && next_node.right.nil?
-      curr_node.left = nil if is_left
-      curr_node.right = nil unless is_left
-    elsif next_node.left.nil? || next_node.right.nil?
-      # next node has one child
-    end
-
     curr_node
-      
-    # I think this one we have recursion, but we have to keep track of two nodes.
-    # Remember that my Node class has the mixin Comparable, so I can probably use that here, maybe?
-
-    # 3 cases we must handle
-    # no children, just set previous node pointer to nil
-    # one child, set previous node pointer to current node child
-    # two children, find left most child
-    #  save reference to current node's right child
-    #  set left most child's parent pointer to nil
-    #  replace current node with smallest child
-    #  update new current node to point to old right child
   end
 
   def find(value, node = @root)
@@ -99,9 +90,21 @@ class Tree
     pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
   end
 
+  def pp
+    pretty_print()
+  end
+
   private
 
   def prep_array(array)
     array.uniq.sort
+  end
+
+  def minValueNode(node)
+    current = node
+    until current.left.nil?
+      current = current.left
+    end
+    current
   end
 end
