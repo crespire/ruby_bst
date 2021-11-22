@@ -16,7 +16,7 @@ class Node
 end
 
 class Tree
-  attr_accessor :root
+  attr_accessor :root, :size
 
   def initialize(array)
     safe = prep_array(array)
