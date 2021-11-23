@@ -103,32 +103,32 @@ class Tree
     output
   end
 
-  def in_order(node = @root, output = [])
+  def in_order(node = @root, output = [], &block)
     return if node.nil? # Base case, we have empty node.
 
-    in_order(node.left, output)
-    output.push(block_given? ? yield(node) : node.data)
-    in_order(node.right, output)
+    in_order(node.left, output, &block)
+    output.push(block_given? ? block.call(node) : node.data)
+    in_order(node.right, output, &block)
 
     output
   end
 
-  def pre_order(node = @root, output = [])
+  def pre_order(node = @root, output = [], &block)
     return if node.nil?
 
-    output.push(block_given? ? yield(node) : node.data)
-    pre_order(node.left, output)
-    pre_order(node.right, output)
+    output.push(block_given? ? block.call(node) : node.data)
+    pre_order(node.left, output, &block)
+    pre_order(node.right, output, &block)
 
     output
   end
 
-  def post_order(node = @root, output = [])
+  def post_order(node = @root, output = [], &block)
     return if node.nil?
 
-    post_order(node.left, output)
-    post_order(node.right, output)
-    output.push(block_given? ? yield(node) : node.data)
+    post_order(node.left, output, &block)
+    post_order(node.right, output, &block)
+    output.push(block_given? ? block.call(node) : node.data)
 
     output
   end
