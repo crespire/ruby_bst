@@ -95,7 +95,6 @@ class Tree
     until queue.empty?
       current = queue.shift
       output.push(block_given? ? yield(current) : current.data)
-      puts current # Just putting the node into console for now
       queue.push(current.left) if current.left
       queue.push(current.right) if current.right
     end
@@ -138,6 +137,20 @@ class Tree
 
     count += 1
     [height(node.left, count), height(node.right, count)].max
+  end
+
+  def depth(node)
+    return if node.nil?
+
+    curr_node = @root
+    count = 0
+    until curr_node.data == node.data
+      count += 1
+      curr_node = curr_node.left if node.data < curr_node.data
+      curr_node = curr_node.right if node.data > curr_node.data
+    end
+
+    count
   end
 
   def pretty_print(node = @root, prefix = '', is_left = true)
