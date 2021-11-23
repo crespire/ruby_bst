@@ -103,6 +103,36 @@ class Tree
     output
   end
 
+  def in_order(node = @root, output = [])
+    return if node.nil? # Base case, we have empty node.
+
+    in_order(node.left, output)
+    output.push(block_given? ? yield(node) : node.data)
+    in_order(node.right, output)
+
+    output
+  end
+
+  def pre_order(node = @root, output = [])
+    return if node.nil?
+
+    output.push(block_given? ? yield(node) : node.data)
+    pre_order(node.left, output)
+    pre_order(node.right, output)
+
+    output
+  end
+
+  def post_order(node = @root, output = [])
+    return if node.nil?
+
+    post_order(node.left, output)
+    post_order(node.right, output)
+    output.push(block_given? ? yield(node) : node.data)
+
+    output
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
