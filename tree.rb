@@ -154,7 +154,7 @@ class Tree
   end
 
   def balanced?
-    left = height(@root.left, 0)
+    left = height(@root.left, 0) # Pass count = 0, as we're starting at height 1 (root's children)
     right = height(@root.right, 0)
 
     p left, right
