@@ -140,7 +140,7 @@ class Tree
   end
 
   def depth(node)
-    return if node.nil?
+    return nil if node.nil?
 
     curr_node = @root
     count = 0
@@ -156,9 +156,6 @@ class Tree
   def balanced?
     left = height(@root.left, 0) # Pass count = 0, as we're starting at height 1 (root's children)
     right = height(@root.right, 0)
-
-    p left, right
-
     (left - right).between?(-1, 1)
   end
 
