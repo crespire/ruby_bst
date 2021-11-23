@@ -174,3 +174,26 @@ class Tree
     current
   end
 end
+
+array = Array.new(15) { rand(1..100) }
+tree = Tree.new(array)
+p tree.balanced?
+p tree.level_order
+p tree.pre_order
+p tree.post_order
+p tree.in_order
+tree.pp
+puts 'Press any key to add and rebalance the tree'
+STDIN.getch
+repeat = rand(5..15)
+repeat.times do
+  add = rand(100..500)
+  puts "Adding #{add}..."
+  tree.insert(add)
+end
+p tree.balanced?
+tree.pp
+puts '--------------------------------------'
+tree.rebalance
+tree.pp
+p tree.balanced?
