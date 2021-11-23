@@ -149,7 +149,7 @@ class Tree
     (left - right).between?(-1, 1)
   end
 
-  def rebalance
+  def rebalance!
     values = in_order
     @root = build_tree(values)
   end
@@ -194,6 +194,6 @@ end
 p tree.balanced?
 tree.pp
 puts '--------------------------------------'
-tree.rebalance
+tree.rebalance!
 tree.pp
 p tree.balanced?
