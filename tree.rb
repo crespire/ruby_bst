@@ -10,17 +10,16 @@ class Node
     @right = nil
   end
 
-  def <=>(other_node)
-    @data <=> other_node.data
+  def <=>(other)
+    @data <=> other.data
   end
 end
 
 class Tree
-  attr_accessor :root, :size
+  attr_accessor :root
 
   def initialize(array)
     safe = prep_array(array)
-    @size = safe.length
     @root = build_tree(safe)
   end
 
@@ -37,15 +36,8 @@ class Tree
   end
 
   def insert(value, node = @root)
-    if @root.nil?
-      @size += 1
-      return @root = Node.new(value)
-    end
-
-    if node.nil?
-      @size += 1
-      return Node.new(value)
-    end
+    return @root = Node.new(value) if @root.nil?
+    return Node.new(value) if node.nil?
 
     value < node.data ? node.left = insert(value, node.left) : node.right = insert(value, node.right)
     node
@@ -63,12 +55,10 @@ class Tree
       if curr_node.left.nil?
         temp = curr_node.right
         curr_node = nil
-        @size -= 1
         return temp
       elsif curr_node.right.nil?
         temp = curr_node.left
         curr_node = nil
-        @size -= 1
         return temp
       end
 
@@ -157,6 +147,11 @@ class Tree
     left = height(@root.left, 0) # Pass count = 0, as we're starting at height 1 (root's children)
     right = height(@root.right, 0)
     (left - right).between?(-1, 1)
+  end
+
+  def rebalance
+    values = in_order
+    @root = build_tree(values)
   end
 
   def pretty_print(node = @root, prefix = '', is_left = true)
